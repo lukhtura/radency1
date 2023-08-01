@@ -1,0 +1,1 @@
+function editNote(element) {}

@@ -1,0 +1,50 @@
+@import "./resetCss.scss";
+
+.container {
+  margin: 50px auto;
+  width: 1200px;
+
+  .notes-section {
+    .table-head > *,
+    .notes-list__item > * {
+      flex: 1;
+    }
+    .table-head {
+      border-radius: 5px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      background-color: grey;
+    }
+    .notes-list {
+      &__item {
+        margin: 10px 0;
+        padding: 15px 0;
+        width: 100%;
+        background-color: rgb(206, 206, 240);
+        display: flex;
+        justify-content: space-between;
+        border-radius: 5px;
+      }
+
+      .list-item-buttons__btn {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .note-form {
+    border: 1px solid black;
+    width: 400px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    &__add-btn {
+      width: 100px;
+    }
+  }
+}
