@@ -1,10 +1,16 @@
 @import "./resetCss.scss";
+@import "./form-modal.scss";
+
+* {
+  box-sizing: border-box;
+}
 
 .container {
   margin: 50px auto;
   width: 1200px;
 
-  .notes-section {
+  .notes-section,
+  .summary-section {
     .table-head > *,
     .notes-list__item > * {
       flex: 1;
@@ -14,37 +20,58 @@
       padding: 10px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       color: white;
       background-color: grey;
+
+      .table-head-buttons {
+        display: flex;
+        justify-content: flex-end;
+        &__btn {
+          width: 25px;
+        }
+      }
     }
     .notes-list {
       &__item {
         margin: 10px 0;
-        padding: 15px 0;
+        padding: 15px;
         width: 100%;
         background-color: rgb(206, 206, 240);
         display: flex;
         justify-content: space-between;
+        align-items: center;
         border-radius: 5px;
-      }
 
-      .list-item-buttons__btn {
-        cursor: pointer;
+        .list-item-buttons {
+          display: flex;
+          justify-content: flex-end;
+          gap: 15px;
+          &__btn {
+            width: 25px;
+          }
+        }
       }
     }
   }
 
-  .note-form {
-    border: 1px solid black;
-    width: 400px;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  .summary-section {
+    margin-top: 100px;
+  }
 
-    &__add-btn {
-      width: 100px;
+  .hide {
+    display: none;
+  }
+
+  .btn {
+    cursor: pointer;
+
+    &:hover {
+      filter: invert(0.3);
+    }
+
+    &:active {
+      transform: translateY(1px);
     }
   }
 }

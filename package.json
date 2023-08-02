@@ -22,5 +22,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "html-webpack-inline-svg-plugin": "^2.3.0"
+  }
 }

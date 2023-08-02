@@ -1,16 +1,21 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
 
 module.exports = {
   entry: './js/app.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
     clean: true,
+    path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'assets/[name][ext]',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
+    }),
+    new HtmlWebpackInlineSVGPlugin({
+      runPreEmit: true,
     }),
   ],
   module: {
@@ -20,11 +25,18 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'images/[name][ext]',
-        },
+        test: /\.(png|svg|jpe?g|gif|webp)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              type: 'asset/resource',
+              limit: 10000,
+              outputPath: 'images',
+              name: '[name].[ext]',
+            },
+          },
+        ],
       },
     ],
   },
