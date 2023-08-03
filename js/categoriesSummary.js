@@ -1,6 +1,12 @@
-function createSummaryTemplate(name, activeNum, archiveNum) {
-  return `<li class="notes-list__item">
-          <h3 class="list-item__name">${name}</h3>
+import getCategoryIcon from './getCategoryIcon';
+
+function createSummaryTemplate(category, activeNum, archiveNum) {
+  const iconSrc = getCategoryIcon(category);
+  return `<li class="notes-list-item">
+          <div class="title-container">
+          <img src="${iconSrc}" class="title-container__icon" alt=${category} />
+             <h3 class="title-container__title">${category}</h3>
+          </div>
           <p class="list-item__created-date">${activeNum}</p>
           <p class="list-item__category">${archiveNum}</p>
       </li>`;

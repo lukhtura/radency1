@@ -1,62 +1,21 @@
 @import "./resetCss.scss";
+@import "./tables.scss";
 @import "./form-modal.scss";
 
 * {
   box-sizing: border-box;
 }
 
+body {
+  font-family: "Manrope", sans-serif;
+}
+
 .container {
   margin: 50px auto;
   width: 1200px;
 
-  .notes-section,
-  .summary-section {
-    .table-head > *,
-    .notes-list__item > * {
-      flex: 1;
-    }
-    .table-head {
-      border-radius: 5px;
-      padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-      background-color: grey;
-
-      .table-head-buttons {
-        display: flex;
-        justify-content: flex-end;
-        &__btn {
-          width: 25px;
-        }
-      }
-    }
-    .notes-list {
-      &__item {
-        margin: 10px 0;
-        padding: 15px;
-        width: 100%;
-        background-color: rgb(206, 206, 240);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 5px;
-
-        .list-item-buttons {
-          display: flex;
-          justify-content: flex-end;
-          gap: 15px;
-          &__btn {
-            width: 25px;
-          }
-        }
-      }
-    }
-  }
-
-  .summary-section {
-    margin-top: 100px;
+  .buttons-container {
+    margin-bottom: 10px;
   }
 
   .hide {
@@ -74,4 +33,15 @@
       transform: translateY(1px);
     }
   }
+}
+
+.rotated {
+  transform: rotateZ(180deg);
+}
+
+.error {
+  color: red;
+  font-size: 30px;
+  text-align: center;
+  margin-top: 20px;
 }

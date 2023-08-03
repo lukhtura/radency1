@@ -1,0 +1,81 @@
+.notes-section,
+.summary-section {
+  .table-head,
+  .notes-list-item {
+    display: grid;
+    grid-template-columns: 200px 140px 130px 400px 180px 120px;
+    border-radius: 5px;
+    align-items: center;
+
+    p {
+      text-align: center;
+    }
+  }
+  .table-head {
+    padding: 10px;
+    color: white;
+    background-color: rgb(155, 119, 119);
+
+    .table-head-buttons {
+      display: flex;
+      justify-content: flex-end;
+
+      & {
+        .delete-btn {
+          width: 32px;
+        }
+      }
+    }
+  }
+  .notes-list {
+    .notes-list-item {
+      margin: 10px 0;
+      padding: 15px;
+      width: 100%;
+      background-color: rgb(206, 206, 240);
+
+      .title-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &__icon {
+          width: 36px;
+        }
+
+        &__title {
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
+
+      .list-item-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        &__btn {
+          width: 25px;
+        }
+
+        .list-item-buttons__archive-btn {
+          width: 36px;
+        }
+      }
+    }
+  }
+}
+
+.summary-section {
+  margin-top: 100px;
+  .table-head,
+  .notes-list-item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-radius: 5px;
+    align-items: center;
+
+    p {
+      text-align: left;
+    }
+  }
+}

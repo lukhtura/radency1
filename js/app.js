@@ -1,16 +1,24 @@
+// import functions
 import createNoteTemplate from './createNoteTemplate';
 import { showNoteForm, hideNoteForm } from './toggleNoteForm';
 import addFormattedDate from './addFormattedDate';
 import deleteNote from './deleteNote';
 import editNote from './editNote';
+import { archivateNote, archivateAll } from './archivateNote';
 import extractDates from './extractDates';
 import refreshSummaries from './categoriesSummary';
+import changeTableType from './changeTableType';
+import validateForm from './validateForm';
 
+// import styles
 import '../scss/styles.scss';
 
 // table of notes ui parts
 const notesList = document.querySelector('#list');
 const createNoteBtn = document.querySelector('.create-button');
+const tableTypeBtn = document.querySelector('.table-type-button');
+const deleteAllBtn = document.querySelector('#delete-all-button');
+const archiveAllBtn = document.querySelector('#archive-all-button');
 
 // table of summaries ui parts
 const summaryList = document.querySelector('#summary-list');
@@ -23,6 +31,7 @@ const contentInput = document.querySelector('#content');
 const categorySelector = document.querySelector('#selector');
 const submitBtn = document.querySelector('#submit-btn');
 const closeBtn = document.querySelector('#close-modal-btn');
+const validateMsg = document.querySelector('.note-form__validate-msg');
 
 // data
 let notesData = [
@@ -75,28 +84,48 @@ let notesData = [
     id: 6,
     date: 'August 1, 2023',
     title: 'Call Mom',
-    category: 'Random Thought',
+    category: 'Idea',
     content: 'Do not forget!',
     dates: [],
     isArchived: false,
   },
 ];
 
-// notes id counter
+// find last note id
 let lastNoteId = notesData.reduce(
   (max, note) => (note.id > max ? note.id : max),
   0
 );
+
+//notes counter state
 let notesIdCounter = lastNoteId + 1;
 
-function loadNotes(notesArr, listElement) {
-  listElement.innerHTML = '';
-  notesArr.forEach((note) => {
-    if (note.isArchived === false) {
-      listElement.insertAdjacentHTML('beforeend', createNoteTemplate(note));
-    }
-  });
+// table type state
+let isArchiveTableShow = false;
 
+// notes init function
+function loadNotes(notesArr, listElement) {
+  // clean list from old notes
+  listElement.innerHTML = '';
+
+  // render notes
+  try {
+    notesArr.forEach((note) => {
+      if (note.isArchived === isArchiveTableShow) {
+        listElement.insertAdjacentHTML(
+          'beforeend',
+          createNoteTemplate(note, isArchiveTableShow)
+        );
+      }
+    });
+  } catch (error) {
+    listElement.insertAdjacentHTML(
+      'beforeend',
+      '<h2 class="error">SOMETHING WENT WRONG</h2>'
+    );
+  }
+
+  // define notes buttons
   const noteEditBtns = document.querySelectorAll(
     '.list-item-buttons__edit-btn'
   );
@@ -107,45 +136,44 @@ function loadNotes(notesArr, listElement) {
     '.list-item-buttons__delete-btn'
   );
 
+  function handleDeleteButton(event) {
+    const id = +event.target.dataset.id;
+    const updatedNotes = deleteNote(id, notesData);
+    notesData = [...updatedNotes];
+    refreshUI();
+  }
+
+  // add event listeners
   noteEditBtns.forEach((btn) => {
     btn.addEventListener('click', (event) => {
-      const id = +event.target.dataset.id;
-      editNote(modal, form, id, notesData);
+      showNoteForm(modal);
+      editNote(event, form, notesData);
       refreshUI();
     });
   });
 
   noteArchiveBtns.forEach((btn) => {
     btn.addEventListener('click', (event) => {
-      const id = +event.target.dataset.id;
-      notesArr.forEach((note) => {
-        if (note.id === id) {
-          note.isArchived = true;
-        }
-      });
+      archivateNote(event, notesArr);
       refreshUI();
+      console.log(isArchiveTableShow);
     });
   });
 
   noteDeleteBtns.forEach((btn) => {
-    btn.addEventListener('click', (event) => {
-      const id = +event.target.dataset.id;
-      notesData = deleteNote(id, notesData);
-      refreshUI();
-    });
+    btn.addEventListener('click', handleDeleteButton);
   });
 }
 
+// refresh notes table and summaries table
 function refreshUI() {
   loadNotes(notesData, notesList);
   refreshSummaries(notesData, summaryList);
 }
 
-// init
-refreshUI();
-
+// add note function
 function addNote(id) {
-  if (nameInput.value && contentInput.value && categorySelector.value) {
+  if (nameInput.value && contentInput.value) {
     const noteName = nameInput.value;
     const noteContent = contentInput.value;
     const noteCategory = categorySelector.value;
@@ -179,21 +207,54 @@ function addNote(id) {
   }
 }
 
+// init
+refreshUI();
+
+// button handlers
 function submitForm(event, modal) {
   const id = +event.target.dataset.id;
   event.preventDefault();
-  addNote(id);
-  hideNoteForm(modal);
+  if (validateForm(nameInput, contentInput)) {
+    addNote(id);
+    hideNoteForm(modal, form, validateMsg);
+  } else {
+    validateMsg.innerHTML = 'min. 3 chars each field';
+  }
 }
 
-// OPEN FORM CREATE NOTE BUTTON LISTENER
-createNoteBtn.addEventListener('click', () => {
-  form.elements['submit-btn'].removeAttribute('data-id');
-  form.reset();
+function handleCreateNoteBtn() {
   showNoteForm(modal);
-});
-// FORM CLOSE BUTTON LISTENER
-closeBtn.addEventListener('click', () => hideNoteForm(modal));
+}
 
-// ADD NOTE BUTTON LISTENER
+function handleTableTypeBtn() {
+  isArchiveTableShow = !isArchiveTableShow;
+  changeTableType(isArchiveTableShow, tableTypeBtn);
+  refreshUI();
+}
+// button handlers end
+
+// createnote button listener
+createNoteBtn.addEventListener('click', handleCreateNoteBtn);
+
+// close form button listener
+closeBtn.addEventListener('click', () =>
+  hideNoteForm(modal, form, validateMsg)
+);
+
+// add note button listener
 submitBtn.addEventListener('click', (event) => submitForm(event, modal));
+
+// change table type button listener
+tableTypeBtn.addEventListener('click', handleTableTypeBtn);
+
+//delete all button listener
+deleteAllBtn.addEventListener('click', () => {
+  notesData.length = 0;
+  refreshUI();
+});
+
+// head archive all button listener
+archiveAllBtn.addEventListener('click', () => {
+  notesData.forEach((note) => (note.isArchived = true));
+  refreshUI();
+});

@@ -1,3 +1,5 @@
+import normalizeForm from './normalizeForm';
+
 export function showNoteForm(modal) {
   modal.classList.remove('hide');
 
@@ -7,11 +9,9 @@ export function showNoteForm(modal) {
     }
   };
   document.addEventListener('keydown', keydownHandler);
-
-  return true;
 }
 
-export function hideNoteForm(modal) {
+export function hideNoteForm(modal, form, validateMsg) {
   modal.classList.add('hide');
-  return false;
+  normalizeForm(form, validateMsg);
 }
