@@ -1,0 +1,60 @@
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .note-form {
+    background-color: #fff;
+    padding: 30px 20px;
+    border-radius: 5px;
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    width: 400px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+
+    &__close-btn {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 20px;
+    }
+
+    &__validate-msg {
+      color: red;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .note-form-item {
+      height: 40px;
+      margin-bottom: 10px;
+
+      &__label {
+        display: inline-block;
+        width: 85px;
+        margin-right: 10px;
+
+        font-size: 20px;
+      }
+
+      .text-input {
+        width: 250px;
+        padding: 5px;
+      }
+
+      &__add-btn {
+        width: 80px;
+        margin: 0 auto;
+      }
+    }
+  }
+}

@@ -1,72 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notes</title>
-  </head>
-  <body>
-    <div class="container">
-      <section class="notes-section">
-        <div class="table-head">
-          <p class="table-head__label">Name</p>
-          <p class="table-head__label">Created</p>
-          <p class="table-head__label">Category</p>
-          <p class="table-head__label">Content</p>
-          <p class="table-head__label">Dates</p>
-          <div>
-            <img
-              class="list-item-buttons__btn archive-btn"
-              src="./images/archive-icon.svg"
-              alt="archive"
-            />
-            <img
-              class="list-item-buttons__btn delete-btn"
-              src="./images/trash-icon.svg"
-              alt="delete"
-            />
-          </div>
-        </div>
-        <!-- LIST FOR NOTES -->
-        <ul id="list" class="notes-list"></ul>
-      </section>
 
-      <form id="add-form" class="note-form">
-        <label
-          >Name:
-          <input
-            id="name"
-            name="name"
-            type="text"
-            class="note-form__name-input text-input"
-            required
-          />
-        </label>
-        <label
-          >Content:
-          <input
-            id="content"
-            name="content"
-            type="text"
-            class="note-form_content-input text-input"
-            required
-          />
-        </label>
-        <label
-          >Category:
-          <select
-            id="selector"
-            name="type"
-            class="note-form__category-selector"
-          >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+
+  <title>Notes</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="buttons-container">
+      <button class="create-button btn">Create Note</button>
+      <button class="table-type-button btn">Show archive table</button>
+    </div>
+    <!-- MAIN NOTES TABLE -->
+    <section class="notes-section">
+      <div class="table-head">
+        <p class="table-head__label">Name</p>
+        <p class="table-head__label">Created</p>
+        <p class="table-head__label">Category</p>
+        <p class="table-head__label">Content</p>
+        <p class="table-head__label">Dates</p>
+        <div class="table-head-buttons">
+          <img id="archive-all-button" class="table-head-buttons__btn archive-btn btn" inline
+            src="./images/archive-icon.svg" alt="archivate all" />
+          <img id="delete-all-button" class="table-head-buttons__btn delete-btn btn" inline
+            src="./images/trash-icon.svg" alt="delete all"  />
+        </div>
+      </div>
+      <!-- LIST FOR NOTES -->
+      <ul id="list" class="notes-list"></ul>
+    </section>
+
+    <!-- SUMMARY SECTION -->
+    <section class="summary-section">
+      <div class="table-head">
+        <p class="table-head__label">Notes Category</p>
+        <p class="table-head__label">Active</p>
+        <p class="table-head__label">Archived</p>
+      </div>
+      <!-- LIST FOR SUMMARIES -->
+      <ul id="summary-list" class="notes-list">
+      </ul>
+    </section>
+
+
+    <!-- MODAL FORM -->
+    <div id="form-overlay" class="form-overlay hide">
+      <form id="form" class="note-form">
+        <img id="close-modal-btn" class="note-form__close-btn btn" inline src="./images/close-icon.svg" alt="close">
+        <div class="note-form-item">
+          <label for="name" class="note-form-item__label">Title:</label>
+          <input id="name" name="name" type="text" class="note-form-item__name-input text-input" maxlength="15"
+            placeholder="max. 15 chars" />
+          </label>
+        </div>
+        <div class="note-form-item">
+          <label for="content" class="note-form-item__label">Content:</label>
+          <input id="content" name="content" type="text" class="note-form_content-input text-input" maxlength="40"
+            placeholder="max. 40 chars" />
+        </div>
+        <div class="note-form-item">
+          <label for="name" class="note-form-item__label">Category:</label>
+          <select id="selector" name="type" class="note-form-item__category-selector">
             <option value="Task">Task</option>
             <option value="Random Thought">Random Thought</option>
             <option value="Idea">Idea</option>
           </select>
-        </label>
-        <input class="note-form__add-btn" type="submit" value="Add note" />
+        </div>
+        <input id="submit-btn" class="note-form-item__add-btn btn" type="submit" value="Add note" />
+        <p class="note-form__validate-msg"></p>
       </form>
-      <button class="create-button">Create Note</button>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

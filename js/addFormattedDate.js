@@ -22,8 +22,3 @@ function addFormattedDate(date) {
 }
 
 export default addFormattedDate;
-
-// Пример использования:
-const myDate = new Date();
-const formattedDate = addFormattedDate(myDate);
-console.log(formattedDate);
