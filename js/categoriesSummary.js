@@ -19,7 +19,7 @@ function renderSummary(listElement, obj) {
   );
 }
 
-function createSummaryObjects(notesArr) {
+function createArrayOfSummaryObjects(notesArr) {
   const categoryStats = {};
 
   notesArr.forEach((item) => {
@@ -45,7 +45,7 @@ function createSummaryObjects(notesArr) {
 
 function refreshSummaries(notesArr, listElement) {
   listElement.innerHTML = '';
-  const summaryData = createSummaryObjects(notesArr);
+  const summaryData = createArrayOfSummaryObjects(notesArr);
   summaryData.forEach((summaryObj) => {
     renderSummary(listElement, summaryObj);
   });
