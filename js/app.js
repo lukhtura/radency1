@@ -1,13 +1,13 @@
 // import functions
 import createNoteTemplate from './createNoteTemplate';
-import { showNoteForm, hideNoteForm } from './toggleNoteForm';
+import { showModal, hideModal } from './modalControl';
 import addFormattedDate from './addFormattedDate';
 import deleteNote from './deleteNote';
 import editNote from './editNote';
-import { archivateNote, archivateAll } from './archivateNote';
+import { archivateNote } from './archivateNote';
 import extractDates from './extractDates';
 import refreshSummaries from './categoriesSummary';
-import changeTableType from './changeTableType';
+import changeTableTypeSwitcherText from './changeTableTypeSwitcherText';
 import validateForm from './validateForm';
 
 // import styles
@@ -92,12 +92,12 @@ let notesData = [
 ];
 
 // find last note id
-let lastNoteId = notesData.reduce(
+const lastNoteId = notesData.reduce(
   (max, note) => (note.id > max ? note.id : max),
   0
 );
 
-//notes counter state
+//notes id counter state
 let notesIdCounter = lastNoteId + 1;
 
 // table type state
@@ -119,6 +119,7 @@ function loadNotes(notesArr, listElement) {
       }
     });
   } catch (error) {
+    // if error show message
     listElement.insertAdjacentHTML(
       'beforeend',
       '<h2 class="error">SOMETHING WENT WRONG</h2>'
@@ -139,14 +140,14 @@ function loadNotes(notesArr, listElement) {
   function handleDeleteButton(event) {
     const id = +event.target.dataset.id;
     const updatedNotes = deleteNote(id, notesData);
-    notesData = [...updatedNotes];
+    notesData = updatedNotes;
     refreshUI();
   }
 
   // add event listeners
   noteEditBtns.forEach((btn) => {
     btn.addEventListener('click', (event) => {
-      showNoteForm(modal);
+      showModal(modal);
       editNote(event, form, notesData);
       refreshUI();
     });
@@ -156,7 +157,6 @@ function loadNotes(notesArr, listElement) {
     btn.addEventListener('click', (event) => {
       archivateNote(event, notesArr);
       refreshUI();
-      console.log(isArchiveTableShow);
     });
   });
 
@@ -214,21 +214,22 @@ refreshUI();
 function submitForm(event, modal) {
   const id = +event.target.dataset.id;
   event.preventDefault();
+  // validation
   if (validateForm(nameInput, contentInput)) {
     addNote(id);
-    hideNoteForm(modal, form, validateMsg);
+    hideModal(modal, form, validateMsg);
   } else {
     validateMsg.innerHTML = 'min. 3 chars each field';
   }
 }
 
 function handleCreateNoteBtn() {
-  showNoteForm(modal);
+  showModal(modal);
 }
 
 function handleTableTypeBtn() {
   isArchiveTableShow = !isArchiveTableShow;
-  changeTableType(isArchiveTableShow, tableTypeBtn);
+  changeTableTypeSwitcherText(isArchiveTableShow, tableTypeBtn);
   refreshUI();
 }
 // button handlers end
@@ -237,9 +238,7 @@ function handleTableTypeBtn() {
 createNoteBtn.addEventListener('click', handleCreateNoteBtn);
 
 // close form button listener
-closeBtn.addEventListener('click', () =>
-  hideNoteForm(modal, form, validateMsg)
-);
+closeBtn.addEventListener('click', () => hideModal(modal, form, validateMsg));
 
 // add note button listener
 submitBtn.addEventListener('click', (event) => submitForm(event, modal));

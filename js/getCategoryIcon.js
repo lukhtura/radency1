@@ -2,6 +2,7 @@ import taskIcon from '../images/task-icon.svg';
 import ideaIcon from '../images/idea-icon.svg';
 import randomIcon from '../images/random-icon.svg';
 
+// return needed icon from category
 function getCategoryIcon(category) {
   const lowerCaseCategory = category.toLocaleLowerCase();
   const firstCategoryWord = lowerCaseCategory.split(' ')[0];

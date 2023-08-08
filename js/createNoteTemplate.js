@@ -4,6 +4,7 @@ import trashIcon from '../images/trash-icon.svg';
 import archiveIcon from '../images/archive-icon.svg';
 import pencilIcon from '../images/pencil-icon.svg';
 
+// create HTML template note list item
 function createNoteTemplate(noteObj, archiveTableStatus) {
   const { id, date, title, category, content, dates } = noteObj;
 

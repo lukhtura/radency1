@@ -1,5 +1,6 @@
 import getCategoryIcon from './getCategoryIcon';
 
+// create HTML template for summary table item
 function createSummaryTemplate(category, activeNum, archiveNum) {
   const iconSrc = getCategoryIcon(category);
   return `<li class="notes-list-item">
@@ -20,9 +21,12 @@ function renderSummary(listElement, obj) {
 }
 
 function createArrayOfSummaryObjects(notesArr) {
+  // create object of summaries
   const categoryStats = {};
 
+  // iterate notes arr
   notesArr.forEach((item) => {
+    // if category doesnt exist in categoryStats object, then add it
     if (!categoryStats[item.category]) {
       categoryStats[item.category] = {
         name: item.category,
@@ -43,9 +47,13 @@ function createArrayOfSummaryObjects(notesArr) {
   return summaryArr;
 }
 
+// refresh ui of summaries
 function refreshSummaries(notesArr, listElement) {
+  // clean old summaries
   listElement.innerHTML = '';
+  // create and array of summary
   const summaryData = createArrayOfSummaryObjects(notesArr);
+  // render it to the page
   summaryData.forEach((summaryObj) => {
     renderSummary(listElement, summaryObj);
   });

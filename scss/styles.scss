@@ -13,25 +13,25 @@ body {
 .container {
   margin: 50px auto;
   width: 1200px;
+}
 
-  .buttons-container {
-    margin-bottom: 10px;
+.buttons-container {
+  margin-bottom: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+.btn {
+  cursor: pointer;
+
+  &:hover {
+    filter: invert(0.3);
   }
 
-  .hide {
-    display: none;
-  }
-
-  .btn {
-    cursor: pointer;
-
-    &:hover {
-      filter: invert(0.3);
-    }
-
-    &:active {
-      transform: translateY(1px);
-    }
+  &:active {
+    transform: translateY(1px);
   }
 }
 
